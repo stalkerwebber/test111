@@ -14,11 +14,17 @@ var Collection map[string]int
 var CollectionMux sync.RWMutex
 
 func routes() {
+	router.HandleFunc("/", Home)
 	router.HandleFunc("/ping", Ping)
 	router.HandleFunc("/collect", Collect)
 	router.HandleFunc("/stat", Stat)
 
 	Collection = make(map[string]int)
+}
+
+func Home(w http.ResponseWriter, _ *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	_, _ = fmt.Fprintf(w, "%s", "usage: http://127.0.0.1:4100/collect?words=qwe,asd http://127.0.0.1:4100/stat")
 }
 
 func Ping(w http.ResponseWriter, _ *http.Request) {
